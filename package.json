@@ -1,0 +1,20 @@
+{
+  "name": "bot-bragi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@discordjs/opus": "^0.3.3",
+    "axios": "^0.21.4",
+    "discord.js": "^12.5.1",
+    "dotenv": "^10.0.0",
+    "ffmpeg": "0.0.4",
+    "ffmpeg-static": "^4.2.7",
+    "fluent-ffmpeg": "^2.1.2",
+    "node-opus": "^0.3.3",
+    "spdl-core": "^2.0.2",
+    "spotify-url-info": "^2.2.0",
+    "youtube-sr": "^4.1.7",
+    "ytdl-core": "^4.9.1"
+  }
+}
