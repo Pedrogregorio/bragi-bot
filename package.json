@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "dev:server": "nodemon src/index.js"
+  },
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
     "axios": "^0.21.4",
@@ -14,6 +17,7 @@
     "node-opus": "^0.3.3",
     "spdl-core": "^2.0.2",
     "spotify-url-info": "^2.2.0",
+    "sucrase": "^3.20.1",
     "youtube-sr": "^4.1.7",
     "ytdl-core": "^4.9.1"
   }
