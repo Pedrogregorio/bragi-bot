@@ -64,7 +64,6 @@ client.on('message', async (message) => {
 
   if (message.content.startsWith('~skip')) {
     const voiceChannel = message.member.voice.channel;
-    console.log(message.member);
     if (!voiceChannel) return message.channel.send("*você precisa estar em um canal de voz para pular a musica!*");
     const permissions = voiceChannel.permissionsFor(message.client.user);
     if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
