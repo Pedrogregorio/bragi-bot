@@ -5,6 +5,7 @@ import ytdl from 'ytdl-core';
 import playingMusic from './responses/play';
 import listMusics from './responses/list';
 import mountPlaylist from './scripts/mountPlaylist';
+import helpCommands from './responses/help';
 
 const client = new Discord.Client();
 const queue = new Map();
@@ -22,6 +23,9 @@ client.on('message', async (message) => {
     const voiceChannel = message.member.voice.channel;
     
     if (!voiceChannel) return message.channel.send("*você precisa estar em um canal de voz para tocar musica!*");
+    if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
+      return message.channel.send(`${message.author.username} *Voce não pertence ao canal  :kissing:*`)
+    }
     const permissions = voiceChannel.permissionsFor(message.client.user);
     if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
       return message.channel.send(
@@ -65,6 +69,9 @@ client.on('message', async (message) => {
   if (message.content.startsWith('~skip')) {
     const voiceChannel = message.member.voice.channel;
     if (!voiceChannel) return message.channel.send("*você precisa estar em um canal de voz para pular a musica!*");
+    if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
+      return message.channel.send(`${message.author.username} *Você não pertence ao canal  :kissing:*`)
+    }
     const permissions = voiceChannel.permissionsFor(message.client.user);
     if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
       return message.channel.send(
@@ -79,7 +86,10 @@ client.on('message', async (message) => {
 
   if (message.content.startsWith('~list')) {
     const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel) return message.channel.send("*você precisa estar em um canal de voz para pular a musica!*");
+    if (!voiceChannel) return message.channel.send("*você precisa estar em um canal de voz para listar as musicas!*");
+    if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
+      return message.channel.send(`${message.author.username} *Você não pertence ao canal  :kissing:*`)
+    }
     const permissions = voiceChannel.permissionsFor(message.client.user);
     if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
       return message.channel.send(
@@ -92,16 +102,23 @@ client.on('message', async (message) => {
     return;
   }
 
-  if (message.content.startsWith('~purge')) {
+  if (message.content.startsWith('~help')) {
+    helpCommands(message.channel)
+    return;
+  }
+
+  if (message.content.startsWith('~clean')) {
     const voiceChannel = message.member.voice.channel;
     if (!voiceChannel) return message.channel.send("*você precisa estar em um canal de voz para pular a musica!*");
+    if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
+      return message.channel.send(`${message.author.username} *Você não pertence ao canal  :kissing:*`)
+    }
     const permissions = voiceChannel.permissionsFor(message.client.user);
     if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
       return message.channel.send(
         "Preciso das permissões para entrar e falar no seu canal de voz!"
       );
     }
-
     let queueServe = queue.get(message.guild.id)
     purgeQueue(message, queueServe);
     return;
@@ -114,7 +131,7 @@ function queueMusic(message, serverQueue) {
   serverQueue.songs.forEach((song, index) => {
     if (index === 10) return msg = msg + `More...\n`
     if (index > 10) return msg;
-    msg = msg + `**${index} - ${song.title} ** ${ index === 0? ':play_pause:' : ':musical_note:' }\n`
+    msg = msg + `**${index + 1} - ${song.title} ** ${ index === 0? ':play_pause:' : ':musical_note:' }\n`
   });
   listMusics(message, msg);
 }
