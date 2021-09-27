@@ -78,13 +78,38 @@ client.on('message', async (message) => {
   }
 
   if (message.content.startsWith('~list')) {
+    const voiceChannel = message.member.voice.channel;
+    if (!voiceChannel) return message.channel.send("*você precisa estar em um canal de voz para pular a musica!*");
+    const permissions = voiceChannel.permissionsFor(message.client.user);
+    if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
+      return message.channel.send(
+        "Preciso das permissões para entrar e falar no seu canal de voz!"
+      );
+    }
+
     let queueServe = queue.get(message.guild.id)
     queueMusic(message, queueServe);
+    return;
+  }
+
+  if (message.content.startsWith('~purge')) {
+    const voiceChannel = message.member.voice.channel;
+    if (!voiceChannel) return message.channel.send("*você precisa estar em um canal de voz para pular a musica!*");
+    const permissions = voiceChannel.permissionsFor(message.client.user);
+    if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
+      return message.channel.send(
+        "Preciso das permissões para entrar e falar no seu canal de voz!"
+      );
+    }
+
+    let queueServe = queue.get(message.guild.id)
+    purgeQueue(message, queueServe);
     return;
   }
 })
 
 function queueMusic(message, serverQueue) {
+  // Adicionar validação, para saber se a pessoa pertence ao canal
   let msg = '';
   serverQueue.songs.forEach((song, index) => {
     if (index === 10) return msg = msg + `More...\n`
@@ -94,7 +119,17 @@ function queueMusic(message, serverQueue) {
   listMusics(message, msg);
 }
 
+function purgeQueue(message, serverQueue) {
+  // Adicionar validação, para saber se a pessoa pertence ao canal
+  if (serverQueue?.songs.length > 0) {
+    serverQueue.songs = [];
+    return message.channel.send("Sua lista agora está vazia!"); 
+  }
+  return message.channel.send("Sua lista já está vazia!");
+}
+
 function skipMusic(message, serverQueue) {
+  // Adicionar validação, para saber se a pessoa pertence ao canal
   if (!message.member.voice.channel)
     return message.channel.send(
       "Você tem que pertencer ao canal para pular a musica!"
