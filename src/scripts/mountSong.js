@@ -18,6 +18,7 @@ const createSongs = async (message) => {
     songs.push({
       title: songInfo.videoDetails.title,
       url: songInfo.videoDetails.video_url,
+      yut: true
     });
   }
 
@@ -29,6 +30,7 @@ const createSongs = async (message) => {
       songs.push({
         url: music?.url,
         title: music?.title,
+        yut: true
       });
     }
 
@@ -55,11 +57,14 @@ const createSongs = async (message) => {
       await youtube.searchOne(`${playlist[0].track.artists[0].name} ${playlist[0].track.name}`).then((music) => {
         songs.push({
           title: playlist[0].track.name,
-          url: music.url
+          url: music.url,
+          yut: true
         });
       });
       playlist.shift()
     }
+  } else {
+    return message.channel.send(`desculpe mas desconheço essa plataforma: ${plataform[2]}`);
   }
   return { songs, playlist };
 }
