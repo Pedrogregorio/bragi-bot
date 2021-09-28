@@ -109,6 +109,16 @@ client.on('message', async (message) => {
     return;
   }
 
+  if (message.content.startsWith('~stop')) {
+    const voiceChannel = message.member.voice.channel;
+    if (!voiceChannel) return message.channel.send("*você precisa estar em um canal de voz para parar me parar*");
+    if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) {
+      return message.channel.send(`${message.author.username} *Você não pertence ao canal  :kissing:*`)
+    }
+    let queueServe = queue.get(message.guild.id)
+    stop(message.guild, queueServe)
+  }
+
   if (message.content.startsWith('~clean')) {
     const voiceChannel = message.member.voice.channel;
     if (!voiceChannel) return message.channel.send("*você precisa estar em um canal de voz para pular a musica!*");
@@ -122,13 +132,19 @@ client.on('message', async (message) => {
       );
     }
     let queueServe = queue.get(message.guild.id)
-    purgeQueue(message, queueServe);
+    stop(message.guild, queueServe);
     return;
   }
 })
 
+function stop(guild, serverQueue) {
+  serverQueue.songs = [];
+  serverQueue.connection.dispatcher.end();
+  serverQueue.voiceChannel.leave();
+  queue.delete(guild.id);
+}
+
 function queueMusic(message, serverQueue) {
-  // Adicionar validação, para saber se a pessoa pertence ao canal
   let msg = '';
   serverQueue.songs.forEach((song, index) => {
     if (index === 10) return msg = msg + `More...\n`
@@ -138,17 +154,17 @@ function queueMusic(message, serverQueue) {
   listMusics(message, msg);
 }
 
-function purgeQueue(message, serverQueue) {
-  // Adicionar validação, para saber se a pessoa pertence ao canal
-  if (serverQueue?.songs.length > 0) {
-    serverQueue.songs = [];
-    return message.channel.send("Sua lista agora está vazia!"); 
-  }
-  return message.channel.send("Sua lista já está vazia!");
-}
+// TODO
+// function purgeQueue(message, serverQueue) {
+//   if (serverQueue?.songs.length > 0) {
+//     serverQueue.songs = [];
+//     serverQueue.connection.dispatcher.end();
+//     return message.channel.send("Sua lista agora está vazia!"); 
+//   }
+//   return message.channel.send("Sua lista já está vazia!");
+// }
 
 function skipMusic(message, serverQueue) {
-  // Adicionar validação, para saber se a pessoa pertence ao canal
   if (!message.member.voice.channel)
     return message.channel.send(
       "Você tem que pertencer ao canal para pular a musica!"
@@ -158,17 +174,35 @@ function skipMusic(message, serverQueue) {
   play(message.guild, serverQueue.songs[0]);
 }
 
+// async function nextMusic(guild, playlist) {
+//   const music = await mountPlaylist(playlist[0])
+//   play(guild, music)
+// }
+
 function play(guild, song) {
   const server = queue.get(guild.id);
-  const dispatcher = server.connection
-  .play(ytdl(song.url))
-  .on("finish", () => {
-    server.songs.shift();
-    play(guild, server.songs[0]);
-  })
-  .on("error", error => console.error(error));
-  dispatcher.setVolumeLogarithmic(server.volume / 5);
-  playingMusic(server, song.title);
+  if (!song) {
+    setTimeout(()=>{
+      try {
+        if (!server) return
+        server.voiceChannel.leave();
+        queue.delete(guild.id);
+        return;
+      } catch (error) {
+        console.log(error.message)
+      }
+    }, 30000)
+  } else {
+    const dispatcher = server.connection
+    .play(ytdl(song.url))
+    .on("finish", () => {
+      server.songs.shift();
+      play(guild, server.songs[0]);
+    })
+    .on("error", error => console.error(error));
+    dispatcher.setVolumeLogarithmic(server.volume / 5);
+    playingMusic(server, song.title);
+  }
 }
 
 client.login(process.env.TOKEN_BOT);
