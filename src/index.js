@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import Discord from 'discord.js';
 import createSongs from './scripts/mountSong';
-import ytdl, { getInfo } from 'ytdl-core';
+import ytdl from 'ytdl-core';
 import playingMusic from './responses/play';
 import listMusics from './responses/list';
 import mountPlaylist from './scripts/mountPlaylist';
