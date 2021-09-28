@@ -49,14 +49,16 @@ client.on('message', async (message) => {
       server.connection = await voiceChannel.join()
       play(message.guild, server.songs[0]);
       if (playlist.length > 0) {
-        const newPlaylist = await mountPlaylist(playlist);
-        server.songs.push(...newPlaylist);
+        for(const play of playlist) {
+          const newPlaylist = await mountPlaylist(play)
+          server.songs.push(newPlaylist);
+        }
       }
     } else {
       if (playlist.length > 0) {
         const newPlaylist = await mountPlaylist(playlist);
         serverQueue.songs.push(...songs);
-        serverQueue.songs.push(...newPlaylist);
+        serverQueue.songs.push(newPlaylist);
         message.channel.send('Musicas adcionadas à fila');
       } else {
         serverQueue.songs.push(...songs);
