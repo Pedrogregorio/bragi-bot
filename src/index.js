@@ -212,7 +212,7 @@ function play(guild, song) {
     }, 30000)
   } else {
     const dispatcher = server.connection
-    .play(ytdl(song.url))
+    .play(ytdl(song.url, { filter: "audioonly", quality: "lowestaudio" }))
     .on("finish", () => {
       server.songs.shift();
       nextMusic(guild);
