@@ -64,7 +64,14 @@ const createSongs = async (message) => {
       playlist.shift()
     }
   } else {
-    return message.channel.send(`desculpe mas desconheço essa plataforma: ${plataform[2]}`);
+    content.shift()
+    let text = content;
+    let search = await youtube.searchOne(`${text.join(' ')}`)
+    songs.push({
+      url: search?.url,
+      title: search?.title,
+      yut: true
+    });
   }
   return { songs, playlist };
 }
