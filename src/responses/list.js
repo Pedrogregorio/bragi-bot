@@ -2,7 +2,7 @@ import { MessageEmbed } from 'discord.js';
 
 const listMusics = (message, msg) => {
   const exampleEmbed = new MessageEmbed()
-    .setColor('#0099ff')
+    .setColor('#f28fa0')
     .setTitle('Playlist')
     .setDescription(`${msg}`)
   message.channel.send({ embed: exampleEmbed });
