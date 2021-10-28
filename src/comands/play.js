@@ -11,14 +11,12 @@ const playSongs = (message, song) => {
       skipMusic(message);
     })
     .on("error", (error) => {
-      message.channel.send(`Houve um problema com a musica: **${song.title}**`);
       skipMusic(message);
       console.log(error)
     });
     dispatcher.setVolumeLogarithmic(server.volume / 5);
     playingMusic(server, song.title);
   } catch (error) {
-    message.channel.send(`Houve um problema com a musica: **${song.title}**`);
     skipMusic(message);
   }
 }
