@@ -7,9 +7,9 @@ const playingMusic = async (server, title) => {
     }
   });;
   const playMusic = new MessageEmbed()
-    .setColor('#f28fa0')
+    .setColor('#62f8fb')
     .setTitle('Tocando a musica:')
-    .setDescription(`**${title}** :musical_note:`)
+    .setDescription('`'+ title +'` :musical_note:')
   await server.textChannel.send({ embed: playMusic });
   return;
 }

@@ -4,16 +4,22 @@ import mountPlaylist from "../scripts/mountPlaylist"
 const nextMusic = async (message) => {
   const server = message.client.queue.get(message.guild.id)
   if (!server.songs.length > 0) {
-    setTimeout(()=>{
-      try {
-        if (!server) return
+    if (!server) return
+    let aux = 0
+    let interval = setInterval(() => {
+      aux++
+      if (server.songs.length > 0) {
+        stopInterval()
+        return nextMusic(message)
+      }
+      if (aux >= 20) {
+        stopInterval()
         server.voiceChannel.leave();
         message.client.queue.delete(message.guild.id);
         return;
-      } catch (error) {
-        console.log(error.message)
       }
-    }, 60000)
+    }, 3000)
+    function stopInterval() { clearInterval(interval); }
   } else {
     try {
       let music;

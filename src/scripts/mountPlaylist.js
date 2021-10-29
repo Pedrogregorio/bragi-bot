@@ -3,9 +3,9 @@ import youtube from 'youtube-sr';
 const mountPlaylist = async (play) => {
   let playlist;
   try {
-    await youtube.searchOne(`${play.track.artists[0].name} ${play.track.name}`).then((music) => { 
+    await youtube.searchOne(`${play.artist} ${play.name}`).then((music) => { 
        playlist = {  
-        title: play.track.name,
+        title: play.name,
         url: music.url
       }
     });

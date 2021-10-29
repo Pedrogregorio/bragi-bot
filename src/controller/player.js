@@ -1,4 +1,5 @@
 import nextMusic from "../comands/nextMusic";
+import basicMessage from "../responses/basicMessage";
 import createSongs from "../scripts/mountSong";
 
 const runPlay = async (message) => {
@@ -26,17 +27,20 @@ const runPlay = async (message) => {
     }
     nextMusic(message);
   } else {
+    serverQueue.textChannel.messages.cache.forEach(msg => {
+      if (msg.embeds[0]?.description === '**Músicas adicionadas à fila**' || msg.embeds[0]?.description === "**Música adicionada à fila**") return msg.delete();
+    });;
     if (playlist.length > 0) {
       try {
         serverQueue.songs.push(...songs);
         serverQueue.songs.push(...playlist);
-        message.channel.send('Músicas adicionadas à fila');
+        basicMessage(serverQueue, 'Músicas adicionadas à fila');
       } catch (error) {
         console.log(error.message);
       }
     } else {
       serverQueue.songs.push(...songs);
-      return message.channel.send('Música adicionada à fila');
+      return basicMessage(serverQueue, 'Música adicionada à fila');
     }
   }
 }

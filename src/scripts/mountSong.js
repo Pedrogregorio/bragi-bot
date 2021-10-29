@@ -2,6 +2,7 @@ import youtube from 'youtube-sr';
 import ytdl from 'ytdl-core';
 import spotifyApi from 'spotify-url-info';
 import axios from 'axios';
+import messageEmbed from '../responses/messageEmbed';
 
 const createSongs = async (message) => {
   let playlist = [];
@@ -35,33 +36,59 @@ const createSongs = async (message) => {
     }
 
     else if (songInfo.type === 'playlist' || songInfo.type === 'album') {
-      message.channel.send('Processando playlist :laughing:')
+      messageEmbed(message, 'Processando playlist `' + songInfo.title + '`')
 
       const params = new URLSearchParams();
       params.append('grant_type', 'client_credentials');
       
       const { data: { access_token } } = await axios.post(
         process.env.GET_TOKEN_SPOTIFY, 
-        params, {
-          headers: { 'Authorization': `Basic ${process.env.CODE_AUTORIZATON_SPOTIFY}` }
+        params, { headers: { 'Authorization': `Basic ${process.env.CODE_AUTORIZATON_SPOTIFY}` } }
+      ).catch((e) => messageEmbed(message, `desculpe mas ocorreu um erro: ${e.message}`));
+
+      if (songInfo.type === 'playlist') {
+        const newPlayListSpotify = await axios({
+          method: 'GET',
+          url: `${process.env.URL_API_SPOTIFY}/playlists/${plataform[4]}/tracks`,
+          headers: { 'Authorization': `Bearer ${access_token}` }
+        }).catch((e) => messageEmbed(message, 'desculpe mas ocorreu um erro com essa plalist ') );
+        newPlayListSpotify.data.tracks.items.forEach((element) => {
+          playlist.push({
+            name: element.track.name,
+            artist: element.track.artists[0].name,
+          })
         })
-        .catch((e) => message.channel.send(`desculpe mas ocorreu um erro: ${e.message}`));
-
-      const newPlayListSpotify = await axios({
-        method: 'GET',
-        url: `${process.env.URL_API_SPOTIFY}${plataform[4]}/tracks`,
-        headers: { 'Authorization': `Bearer ${access_token}` }
-      }).catch((e) => message.channel.send(`desculpe mas ocorreu um erro: ${e.message}`) );
-      playlist = newPlayListSpotify.data.tracks.items
-
-      await youtube.searchOne(`${playlist[0].track.artists[0].name} ${playlist[0].track.name}`).then((music) => {
-        songs.push({
-          title: playlist[0].track.name,
-          url: music.url,
-          yut: true
+  
+        await youtube.searchOne(`${playlist[0].artist} ${playlist[0].name}`).then((music) => {
+          songs.push({
+            title: playlist[0].name,
+            url: music.url,
+            yut: true
+          });
         });
-      });
-      playlist.shift()
+        playlist.shift()
+      } else {
+        const newPlayListSpotify = await axios({
+          method: 'GET',
+          url: `${process.env.URL_API_SPOTIFY}/albums/${plataform[4]}/tracks`,
+          headers: { 'Authorization': `Bearer ${access_token}` }
+        }).catch((e) => messageEmbed(message, 'desculpe mas ocorreu um erro com esse album') );
+        newPlayListSpotify.data.items.forEach((element) => {
+          playlist.push({
+            name: element.name,
+            artist: element.artists[0].name,
+          })
+        })
+  
+        await youtube.searchOne(`${playlist[0].artist} ${playlist[0].name}`).then((music) => {
+          songs.push({
+            title: playlist[0].name,
+            url: music.url,
+            yut: true
+          });
+        });
+        playlist.shift()
+      }
     }
   } else {
     content.shift()
