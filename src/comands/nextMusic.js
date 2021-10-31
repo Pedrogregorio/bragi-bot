@@ -30,6 +30,7 @@ const nextMusic = async (message) => {
         playSongs(message, server.songs[0])
       }
     } catch (error) {
+      skipMusic(message);
       console.log(error.message)
     }
   }
