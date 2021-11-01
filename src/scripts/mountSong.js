@@ -51,7 +51,7 @@ const createSongs = async (message) => {
           method: 'GET',
           url: `${process.env.URL_API_SPOTIFY}/playlists/${plataform[4]}/tracks`,
           headers: { 'Authorization': `Bearer ${access_token}` }
-        }).catch((e) => messageEmbed(message, 'desculpe mas ocorreu um erro com essa playlist') );
+        }).catch((e) => messageEmbed(message, `desculpe mas ocorreu um erro com essa playlist: ${e.message}`) );
         newPlayListSpotify.data.tracks.items.forEach((element) => {
           playlist.push({
             name: element.track.name,
