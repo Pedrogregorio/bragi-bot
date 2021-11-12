@@ -32,7 +32,19 @@ client.on('message', async (message) => {
       skipMusic(message);
       break;
 
+    case '~quit':
+      stop(message);
+      break;
+
+    case '~leave':
+      stop(message);
+      break;
+
     case '~list':
+      queueMusic(message);
+      break;
+
+    case '~queue':
       queueMusic(message);
       break;
 

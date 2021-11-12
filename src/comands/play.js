@@ -19,6 +19,8 @@ const playSongs = (message, song) => {
     dispatcher.setVolumeLogarithmic(server.volume / 5);
     playingMusic(server, song.title);
   } catch (error) {
+    console.log('403 erroo')
+    console.log('===================')
     skipMusic(message);
   }
 }
