@@ -82,7 +82,6 @@ client.on('message', async (message) => {
       break;
     
     default:
-      commandNotFound(message);
       message.channel.send("Desculpe, tente isso:");
       helpCommands(message.channel);
   }
