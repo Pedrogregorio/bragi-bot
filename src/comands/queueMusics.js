@@ -2,6 +2,11 @@ import listMusics from "../responses/list";
 
 const queueMusic = (message) => {
   const serverQueue = message.client.queue.get(message.guild.id);
+  if (!message.member.voice.channel)
+    return basicMessage(
+      serverQueue,
+      "Você tem que pertencer ao canal para pular a música!"
+    );
   let msg = '';
   serverQueue.songs.forEach((song, index) => {
     if (index === 10) return msg = msg + `More...\n`
