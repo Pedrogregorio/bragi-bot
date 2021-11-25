@@ -83,13 +83,9 @@ client.on('message', async (message) => {
     
     default:
       commandNotFound(message);
-      console.log(`Desculpe, no conheço o comando: ${content}.`);
+      message.channel.send("Desculpe, tente isso:");
+      helpCommands(message.channel);
   }
 })
-
-function commandNotFound(message) {
-  const server = message.client.queue.get(message.guild.id)
-  basicMessage(server, "Desculpe, tente isso: ~help");
-}
 
 client.login(process.env.TOKEN_BOT);
