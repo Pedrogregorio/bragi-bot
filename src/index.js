@@ -6,6 +6,7 @@ import skipMusic from './comands/skipMusic';
 import queueMusic from './comands/queueMusics';
 import stop from './comands/stop';
 import clean from './comands/clean';
+import basicMessage from './responses/basicMessage';
 
 const client = new Discord.Client();
 client.queue = new Map();
@@ -20,6 +21,8 @@ client.on('message', async (message) => {
   const content = message.content.split(" ")[0];
   switch (content) {
     
+    // commands for play
+
     case '~play':
       runPlay(message);
       break;
@@ -28,11 +31,36 @@ client.on('message', async (message) => {
       runPlay(message);
       break;
 
+
+    // command to skip music
+
     case '~skip':
       skipMusic(message);
       break;
 
+      
+    // commmands for list
+    
+    case '~list':
+      queueMusic(message);
+      break;
+      
+    case '~queue':
+      queueMusic(message);
+      break;
+          
+          
+    // commands for stop and leave
+          
+    case '~stop':
+      stop(message);
+      break;
+            
     case '~quit':
+      stop(message);
+      break;
+
+    case '~disconnect':
       stop(message);
       break;
 
@@ -40,29 +68,28 @@ client.on('message', async (message) => {
       stop(message);
       break;
 
-    case '~list':
-      queueMusic(message);
-      break;
 
-    case '~queue':
-      queueMusic(message);
-      break;
-
-    case '~stop':
-      stop(message);
-      break;
+    // commanda for clean
 
     case '~clean':
       clean(message);
       break;
 
+
+    // commands for help
     case '~help':
-      helpCommands(message.channel)
+      helpCommands(message.channel);
       break;
     
     default:
+      commandNotFound(message);
       console.log(`Desculpe, no conheço o comando: ${content}.`);
   }
 })
+
+function commandNotFound(message) {
+  const server = message.client.queue.get(message.guild.id)
+  basicMessage(server, "Desculpe, tente isso: ~help");
+}
 
 client.login(process.env.TOKEN_BOT);
