@@ -5,7 +5,7 @@ const queueMusic = (message) => {
   if (!message.member.voice.channel)
     return basicMessage(
       serverQueue,
-      "Você tem que pertencer ao canal para pular a música!"
+      "Você tem que pertencer ao canal para fazer essa ação!"
     );
   let msg = '';
   serverQueue.songs.forEach((song, index) => {
