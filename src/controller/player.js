@@ -1,4 +1,4 @@
-import nextMusic from "../comands/nextMusic";
+import nextMusic from "../scripts/nextMusic";
 import basicMessage from "../responses/basicMessage";
 import createSongs from "../scripts/mountSong";
 

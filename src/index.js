@@ -2,11 +2,10 @@ import 'dotenv/config';
 import Discord from 'discord.js';
 import helpCommands from './responses/help';
 import runPlay from './controller/player';
-import skipMusic from './comands/skipMusic';
-import queueMusic from './comands/queueMusics';
+import skip from './comands/skip';
+import queueMusic from './comands/queue';
 import stop from './comands/stop';
 import clean from './comands/clean';
-import basicMessage from './responses/basicMessage';
 
 const client = new Discord.Client();
 client.queue = new Map();
@@ -35,7 +34,7 @@ client.on('message', async (message) => {
     // command to skip music
 
     case '~skip':
-      skipMusic(message);
+      skip(message);
       break;
 
       

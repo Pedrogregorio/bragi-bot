@@ -1,5 +1,5 @@
-import playSongs from "./play";
-import mountPlaylist from "../scripts/mountPlaylist"
+import playSongs from "../comands/play";
+import mountPlaylist from "./mountPlaylist"
 
 const nextMusic = async (message) => {
   const server = message.client.queue.get(message.guild.id)

@@ -1,7 +1,7 @@
 import basicMessage from "../responses/basicMessage";
-import nextMusic from "./nextMusic";
+import nextMusic from "../scripts/nextMusic";
 
-const skipMusic = (message) => {
+const skip = (message) => {
   const serverQueue = message.client.queue.get(message.guild.id);
   if (!message.member.voice.channel)
     return basicMessage(
@@ -14,4 +14,4 @@ const skipMusic = (message) => {
   nextMusic(message);
 }
 
-export default skipMusic;
+export default skip;
