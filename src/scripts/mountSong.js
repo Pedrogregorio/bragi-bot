@@ -15,12 +15,9 @@ const createSongs = async (message) => {
   let music;
 
   if(plataform[2] === 'www.youtube.com') {
-    const songInfo = await ytdl.getInfo(content[1]); 
-    songs.push({
-      title: songInfo.videoDetails.title,
-      url: songInfo.videoDetails.video_url,
-      yut: true
-    });
+    const songInfo = await ytdl.getInfo(content[1]);
+    music = await youtube.searchOne(songInfo.videoDetails.title)
+    songs.push(mountSong(music));
   }
 
   else if(plataform[2] === 'open.spotify.com') {
@@ -28,11 +25,7 @@ const createSongs = async (message) => {
 
     if (songInfo.type === 'track') { 
       music = await youtube.searchOne(`${songInfo.artist} ${songInfo.title}`)
-      songs.push({
-        url: music?.url,
-        title: music?.title,
-        yut: true
-      });
+      songs.push(mountSong(music));
     }
 
     else if (songInfo.type === 'playlist' || songInfo.type === 'album') {
@@ -60,11 +53,7 @@ const createSongs = async (message) => {
         })
   
         await youtube.searchOne(`${playlist[0].artist} ${playlist[0].name}`).then((music) => {
-          songs.push({
-            title: playlist[0].name,
-            url: music.url,
-            yut: true
-          });
+          songs.push(mountSong(music));
         });
         playlist.shift()
       } else {
@@ -81,11 +70,7 @@ const createSongs = async (message) => {
         })
   
         await youtube.searchOne(`${playlist[0].artist} ${playlist[0].name}`).then((music) => {
-          songs.push({
-            title: playlist[0].name,
-            url: music.url,
-            yut: true
-          });
+          songs.push(mountSong(music));
         });
         playlist.shift()
       }
@@ -93,14 +78,23 @@ const createSongs = async (message) => {
   } else {
     content.shift()
     let text = content;
-    let search = await youtube.searchOne(`${text.join(' ')}`)
-    songs.push({
-      url: search?.url,
-      title: search?.title,
-      yut: true
-    });
+    let music = await youtube.searchOne(`${text.join(' ')}`)
+    songs.push(mountSong(music));
   }
   return { songs, playlist };
+}
+
+function mountSong(music) {
+  return {
+    url: music?.url,
+    icon: music?.channel.icon.url,
+    thumbnail: music?.thumbnail.url,
+    title: music?.title,
+    author: music?.channel.name,
+    duration: music?.duration,
+    durationFormatted: music?.durationFormatted,
+    yut: true
+  };
 }
 
 export default createSongs;

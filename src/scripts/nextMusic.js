@@ -22,16 +22,11 @@ const nextMusic = async (message) => {
     function stopInterval() { clearInterval(interval); }
   } else {
     try {
-      let music;
-      if (!server.songs[0]?.yut) {
-        music = await mountPlaylist(server.songs[0])
-        playSongs(message, music)
-      }else {
-        playSongs(message, server.songs[0])
-      }
+      if (!server.songs[0]?.yut) await mountPlaylist(message)
+      playSongs(message, server.songs[0])
     } catch (error) {
-      skipMusic(message);
       console.log(error.message)
+      skipMusic(message);
     }
   }
 }
