@@ -18,7 +18,7 @@
     "spdl-core": "^2.0.2",
     "spotify-url-info": "^2.2.0",
     "sucrase": "^3.20.1",
-    "youtube-sr": "^4.1.7",
-    "ytdl-core": "^4.9.1"
+    "youtube-sr": "^4.1.13",
+    "ytdl-core": "^4.10.0"
   }
 }
