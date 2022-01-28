@@ -6,6 +6,8 @@ import skip from './comands/skip';
 import queueMusic from './comands/queue';
 import stop from './comands/stop';
 import clean from './comands/clean';
+import pauseSong from './comands/pause';
+import shuffleSongs from './comands/shuffle';
 
 const client = new Discord.Client();
 client.queue = new Map();
@@ -75,10 +77,29 @@ client.on('message', async (message) => {
       break;
 
 
+    // command for pause
+
+    case '~pause':
+      pauseSong(message);
+      break;
+
+    // command for resume
+
+    case '~resume':
+      pauseSong(message);
+      break;
+
+
     // commands for help
     case '~help':
       helpCommands(message.channel);
       break;
+
+    // commands for shuffle
+    case '~shuffle':
+      shuffleSongs(message.channel);
+      break;
+
     
     default:
       message.channel.send("Desculpe, tente isso:");
