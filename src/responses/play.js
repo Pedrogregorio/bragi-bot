@@ -10,8 +10,7 @@ const playingMusic = async (message, title) => {
     if (msg.author.username === 'bragi' && msg.embeds.length > 0) {
       if (msg.embeds[0].title === 'Tocando a musica:') return msg.delete();
     }
-  });;
-  console.log({ name: server.songs[0].author, iconURL: server.songs[0].icon, url: 'https://discord.js.org' });
+  });
   const playMusic = new MessageEmbed()
     .setColor('#62f8fb')
     .setTitle('Tocando a musica:')
@@ -65,10 +64,8 @@ const playingMusic = async (message, title) => {
         server.muted = !server.muted;
         if (server.muted) {
           server.connection.dispatcher.setVolumeLogarithmic(0);
-          server.textChannel.send(i18n.__mf("play.mutedSong", { author: user })).catch(console.error);
         } else {
           server.connection.dispatcher.setVolumeLogarithmic(server.volume / 100);
-          server.textChannel.send(i18n.__mf("play.unmutedSong", { author: user })).catch(console.error);
         }
         break;
 
