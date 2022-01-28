@@ -10,11 +10,15 @@ const playSongs = (message, song) => {
     skip(message);
   })
   .on("error", (error) => {
+    try {
+      dispatcher.destroy();
+    } catch (err) {
+      console.log(err.message);
+    }
     skip(message);
-    console.log(error.message)
   });
   dispatcher.setVolumeLogarithmic(server.volume / 5);
-  playingMusic(server, song.title);
+  playingMusic(message, song.title);
 }
 
 export default playSongs;
