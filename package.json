@@ -14,11 +14,13 @@
     "ffmpeg": "0.0.4",
     "ffmpeg-static": "^4.2.7",
     "fluent-ffmpeg": "^2.1.2",
+    "m3u8stream": "^0.8.6",
+    "miniget": "^4.2.2",
     "node-opus": "^0.3.3",
     "spdl-core": "^2.0.2",
     "spotify-url-info": "^2.2.0",
     "sucrase": "^3.20.1",
     "youtube-sr": "^4.1.13",
-    "ytdl-core": "^4.10.0"
+    "ytdl-core": "^4.10.1"
   }
 }
