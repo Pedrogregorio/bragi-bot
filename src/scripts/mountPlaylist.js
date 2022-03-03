@@ -2,8 +2,10 @@ import youtube from 'youtube-sr';
 
 const mountPlaylist = async (message) => {
   const server = message.client.queue.get(message.guild.id);
+
   try {
-    await youtube.searchOne(`${server.songs[0].artist} ${server.songs[0].name}`).then((music) => { 
+    await youtube.searchOne(`${server.songs[0].artist} ${server.songs[0].name}`).then((music) => {
+      server.songs.shift();
       server.songs.unshift({  
         url: music?.url,
         icon: music?.channel.icon.url,

@@ -1,10 +1,12 @@
 import nextMusic from "../scripts/nextMusic";
 import basicMessage from "../responses/basicMessage";
-import createSongs from "../scripts/mountSong";
+import createSongs from "../scripts/createSongs";
 
-const runPlay = async (message) => {
+const play = async (message) => {
   const serverQueue = message.client.queue.get(message.guild.id);
+
   const voiceChannel = message.member.voice.channel
+
   const { songs, playlist } = await createSongs(message);
   const server = {
     textChannel: message.channel,
@@ -45,4 +47,4 @@ const runPlay = async (message) => {
   }
 }
 
-export default runPlay;
+export default play;

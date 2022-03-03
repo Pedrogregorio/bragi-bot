@@ -98,10 +98,6 @@ const playingMusic = async (message, title) => {
     }
   });
 
-  collector.on("end", () => {
-    playMessage.reactions.removeAll().catch(console.error);
-  });
-
   return;
 }
 

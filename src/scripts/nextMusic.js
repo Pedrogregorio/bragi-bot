@@ -12,7 +12,7 @@ const nextMusic = async (message) => {
         stopInterval()
         return nextMusic(message)
       }
-      if (aux >= 20) {
+      if (aux >= 50) {
         stopInterval()
         server.voiceChannel.leave();
         message.client.queue.delete(message.guild.id);

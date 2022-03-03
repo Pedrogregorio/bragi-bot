@@ -9,7 +9,7 @@ const skip = (message) => {
       "Você tem que pertencer ao canal para pular a música!"
     );
   if (!serverQueue) return;
-  message.react('👌')
+  message.react('👌');
   serverQueue.songs.shift();
   nextMusic(message);
 }

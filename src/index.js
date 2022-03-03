@@ -1,13 +1,14 @@
 import 'dotenv/config';
 import Discord from 'discord.js';
 import helpCommands from './responses/help';
-import runPlay from './controller/player';
+import play from './controller/play';
 import skip from './comands/skip';
 import queueMusic from './comands/queue';
 import stop from './comands/stop';
 import clean from './comands/clean';
 import pauseSong from './comands/pause';
 import shuffleSongs from './comands/shuffle';
+import loop from './comands/loop';
 
 const client = new Discord.Client();
 client.queue = new Map();
@@ -25,11 +26,11 @@ client.on('message', async (message) => {
     // commands for play
 
     case '~play':
-      runPlay(message);
+      play(message);
       break;
 
     case '~p':
-      runPlay(message);
+      play(message);
       break;
 
 
@@ -70,32 +71,38 @@ client.on('message', async (message) => {
       break;
 
 
-    // commanda for clean
+    // command to clean
 
     case '~clean':
       clean(message);
       break;
 
+    // command to loop music
 
-    // command for pause
+    case '~loop':
+      loop(message);
+      break;
+
+
+    // command to pause
 
     case '~pause':
       pauseSong(message);
       break;
 
-    // command for resume
+    // command to resume
 
     case '~resume':
       pauseSong(message);
       break;
 
 
-    // commands for help
+    // command to help
     case '~help':
       helpCommands(message.channel);
       break;
 
-    // commands for shuffle
+    // command to shuffle
     case '~shuffle':
       shuffleSongs(message.channel);
       break;
