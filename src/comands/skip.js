@@ -10,7 +10,7 @@ const skip = (message) => {
     );
   if (!serverQueue) return;
   message.react('👌');
-  serverQueue.songs.shift();
+  if (!serverQueue.songs[0].loop) serverQueue.songs.shift();
   nextMusic(message);
 }
 

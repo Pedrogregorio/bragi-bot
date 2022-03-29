@@ -7,8 +7,6 @@ const playSongs = (message, song) => {
   const dispatcher = server.connection
   .play(ytdl(song.url, { filter: "audioonly", quality: 'highestaudio', highWaterMark: 1 << 25, maxRetries: 10, maxReconnects: 10 }))
   .on("finish", () => {
-    // TODO: colocar musica em loop
-    if(song.loop) playSongs(message, song);
     console.log("Música finalizada");
     skip(message);
   })
