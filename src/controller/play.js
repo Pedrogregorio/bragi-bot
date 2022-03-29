@@ -7,7 +7,11 @@ const play = async (message) => {
 
   const voiceChannel = message.member.voice.channel
 
-  const { songs, playlist } = await createSongs(message);
+  const data = await createSongs(message);
+
+  const { songs, playlist } = data;
+
+  if (!songs || !playlist) return data; 
   const server = {
     textChannel: message.channel,
     voiceChannel: message.member.voice.channel,
@@ -16,6 +20,7 @@ const play = async (message) => {
     volume: 5,
     playing: true
   }
+
   if (!serverQueue) {
     try {
       server.songs.push(...songs)

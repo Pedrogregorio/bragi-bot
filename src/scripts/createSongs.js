@@ -19,9 +19,13 @@ const createSongs = async (message) => {
   let music;
 
   if(validateWhichPlatform.isYoutube(plataform[2])) {
-    const songInfo = await ytdl.getInfo(musicMessage[1]);
-    music = await youtube.searchOne(songInfo.videoDetails.title)
-    songs.push(mountSong(music));
+    try {
+      const songInfo = await ytdl.getInfo(musicMessage[1]);
+      music = await youtube.searchOne(songInfo.videoDetails.title)
+      songs.push(mountSong(music));
+    } catch (error) {
+      return "Erro ao buscar a musica para reproduzir";
+    }
   }
 
   else if(validateWhichPlatform.isSpotify(plataform[2])) {
