@@ -107,6 +107,14 @@ client.on('message', async (message) => {
       shuffleSongs(message.channel);
       break;
 
+    case 'p!play':
+      message.react('🥲');
+      break;
+
+    case 'p!join':
+      message.react('🥲');
+      break;
+
     
     default:
       message.channel.send("Desculpe, tente isso:");
