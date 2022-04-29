@@ -1,13 +1,11 @@
 import "dotenv/config";
 import play from "../../src/controller/play";
+import mockMessage from "../mock/mockMessage";
 
 
 describe("play music", () => {
   test('Fetch music on youtube to play', async () => {
     const message = mockMessage("~p https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-
-    console.log(mockMessage);
-    console.log(message);
 
     message.client.queue.set(message.guild.id, {
       textChannel: message.channel,
@@ -53,6 +51,6 @@ describe("play music", () => {
     });
 
     const data = await play(message);
-    expect(data).toBe("Erro ao buscar a musica para reproduzir");
+    expect(data).toBe("Não foi possível encontrar a música!");
   });
 });

@@ -11,7 +11,7 @@ describe('Create songs', () => {
   });
 
   test('Creating spotify songs successfully', async () => {
-    const { songs } = await createSongs({ content: '~p https://www.youtube.com/watch?v=dQw4w9WgXcQ' });
+    const { songs } = await createSongs({ content: '~p https://open.spotify.com/track/3NzAGfWHqQVEfYVcYKxNLN?si=e9c55d8701a646c9' });
 
     expect(songs.length).toBe(1);
   });

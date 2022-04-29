@@ -1,8 +1,11 @@
 import playSongs from "../comands/play";
-import mountPlaylist from "./mountPlaylist"
+import convertToYoutube from "./convertToYoutube"
+import MusicException from "../class/MusicException";
+import skip from "../comands/skip";
 
 const nextMusic = async (message) => {
   const server = message.client.queue.get(message.guild.id)
+
   if (!server.songs.length > 0) {
     if (!server) return
     let aux = 0
@@ -21,12 +24,16 @@ const nextMusic = async (message) => {
     }, 3000)
     function stopInterval() { clearInterval(interval); }
   } else {
-    try {
-      if (!server.songs[0]?.yut) await mountPlaylist(message)
+    if (!server.songs[0]?.yut) {
+      await convertToYoutube(message).then(() => {
+        playSongs(message, server.songs[0])
+      }).catch((error) => {
+        skip(message);
+
+        throw new MusicException(error.message);
+      })
+    } else {
       playSongs(message, server.songs[0])
-    } catch (error) {
-      console.log(error.message)
-      skipMusic(message);
     }
   }
 }

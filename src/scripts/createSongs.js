@@ -1,7 +1,7 @@
 import youtube from 'youtube-sr';
-import ytdl from 'ytdl-core';
-import mountSong from './mountSong';
-import spotify from './spotify';
+import mountSong from '../helper/mountSong';
+import MusicException from '../class/MusicException';
+import spotify from './processLinkSpotify';
 
 const createSongs = async (message) => {
   let playlist = [];
@@ -16,16 +16,13 @@ const createSongs = async (message) => {
   
 
   const plataform = musicMessage[1].split("/");
-  let music;
 
   if(validateWhichPlatform.isYoutube(plataform[2])) {
-    try {
-      const songInfo = await ytdl.getInfo(musicMessage[1]);
-      music = await youtube.searchOne(songInfo.videoDetails.title)
+    await youtube.getVideo(musicMessage[1]).then((music) => {
       songs.push(mountSong(music));
-    } catch (error) {
-      return "Erro ao buscar a musica para reproduzir";
-    }
+    }).catch(() => {
+      throw new MusicException("Não foi possível encontrar a música!");
+    });
   }
 
   else if(validateWhichPlatform.isSpotify(plataform[2])) {
@@ -34,11 +31,15 @@ const createSongs = async (message) => {
       songs = response.songs;
     });
   } else {
-    musicMessage.shift()
-    let text = musicMessage;
-    let music = await youtube.searchOne(`${text.join(' ')}`)
-    songs.push(mountSong(music));
+    musicMessage.shift();
+
+    let text = musicMessage.join(" ");
+
+    await youtube.searchOne(text).then((music) => {
+      songs.push(mountSong(music));
+    });
   }
+
   return { songs, playlist };
 }
 

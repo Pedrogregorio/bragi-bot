@@ -1,8 +1,9 @@
-const message = (message) => {
+const mockMessage = (message) => {
   return {
     client: { queue: new Map() },
     guild: { id: '123456789' },
     content:  message,
+    react: jest.fn(),
     channel: {
       send: jest.fn(),
       messages: {
@@ -19,4 +20,4 @@ const message = (message) => {
   };
 }
 
-export default message;
+export default mockMessage;
