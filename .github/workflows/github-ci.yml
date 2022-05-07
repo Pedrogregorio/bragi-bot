@@ -23,12 +23,16 @@ jobs:
         shell: bash
       - name: Deploy
         run: |
-          ssh -tt -i ~/.ssh/id_rsa ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}
+          ssh -tt -i ~/.ssh/id_rsa $remote_user@$remote_host
           cd ~/bragi-bot
           git pull
           yarn install
           pm2 restart bragi
         shell: bash
+        env:
+          remote_user: ${{ secrets.REMOTE_USER }}
+          remote_host: ${{ secrets.REMOTE_HOST }}
+          
 
       # - name: Deploy  
       #   uses: easingthemes/ssh-deploy@main
