@@ -15,25 +15,26 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v1
-      # - name: Create ssh key
-      #   run: |
-      #     install -m 600 -D /dev/null ~/.ssh/id_rsa.pem
-      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa.pem
-      #     ssh-keyscan -H ec2-177-71-145-235.sa-east-1.compute.amazonaws.com > ~/.ssh/known_hosts
-      #   shell: bash
-      # - name: Deploy
-      #   run: |
-      #     ssh -t "~/.ssh/id_rsa.pem" ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}
-      #     cd ~/bragi-bot
-      #     git pull
-      #     yarn install
-      #     pm2 restart bragi
-      - name: Deploy  
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          ARGS: "-rltgoDzvO --delete"
-          SOURCE: "src/"
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ${{ secrets.REMOTE_TARGET }}
+      - name: Create ssh key
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H ec2-177-71-145-235.sa-east-1.compute.amazonaws.com > ~/.ssh/known_hosts
+        shell: bash
+      - name: Deploy
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}
+          cd ~/bragi-bot
+          git pull
+          yarn install
+          pm2 restart bragi
+
+      # - name: Deploy  
+      #   uses: easingthemes/ssh-deploy@main
+      #   env:
+      #     SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+      #     ARGS: "-rltgoDzvO --delete"
+      #     SOURCE: "src/"
+      #     REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      #     REMOTE_USER: ${{ secrets.REMOTE_USER }}
+      #     TARGET: ${{ secrets.REMOTE_TARGET }}
