@@ -23,7 +23,7 @@ jobs:
         shell: bash
       - name: Deploy
         run: |
-          ssh -tt -i ~/.ssh/id_rsa "$remote_user@$remote_host"
+          ssh -tt -i ~/.ssh/id_rsa ubuntu@ec2-177-71-145-235.sa-east-1.compute.amazonaws.com
           cd ~/bragi-bot
           git pull
           yarn install
