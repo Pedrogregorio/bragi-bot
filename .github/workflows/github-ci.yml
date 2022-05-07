@@ -28,6 +28,7 @@ jobs:
           git pull
           yarn install
           pm2 restart bragi
+          exit
         shell: bash
         env:
           remote_user: ${{ secrets.REMOTE_USER }}
