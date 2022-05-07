@@ -15,6 +15,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v1
+
+      - name: teste
+        run: echo secrets.SERVER_SSH_KEY
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
