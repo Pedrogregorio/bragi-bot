@@ -19,6 +19,7 @@ jobs:
         run: |
           install -m 600 -D /dev/null ~/.ssh/id_rsa.pem
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa.pem
+          sudo chmod 600 ~/.ssh/id_rsa.pem
           ssh-keyscan -H ec2-177-71-145-235.sa-east-1.compute.amazonaws.com > ~/.ssh/known_hosts
         shell: bash
       - name: Deploy
