@@ -23,7 +23,7 @@ jobs:
         shell: bash
       - name: Deploy
         run: |
-          ssh -i "~/.ssh/id_rsa" ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}
+          ssh -tt "~/.ssh/id_rsa" ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}
           cd ~/bragi-bot
           git pull
           yarn install
