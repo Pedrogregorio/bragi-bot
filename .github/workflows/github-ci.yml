@@ -13,7 +13,7 @@ jobs:
     environment: production
 
     steps:
-      - name: checkout
+      - name: checkout branch
         uses: actions/checkout@v1
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
