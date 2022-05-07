@@ -21,7 +21,7 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         shell: bash
         env:
-          - SSH_PRIVATE_KEY: "${{ secrets.SERVER_SSH_KEY }}"
+          SSH_PRIVATE_KEY: "${{ secrets.SERVER_SSH_KEY }}"
       - name: Deploy
         run: |
           ssh -i "~/.ssh/id_rsa" ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}"
