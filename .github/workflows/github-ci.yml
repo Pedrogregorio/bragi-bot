@@ -19,9 +19,8 @@ jobs:
         run: |
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.REMOTE_HOST }} > ~/.ssh/known_hosts
         shell: bash
-        env:
-          SSH_PRIVATE_KEY: "${{ secrets.SERVER_SSH_KEY }}"
       - name: Deploy
         run: |
           ssh -i "~/.ssh/id_rsa" ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}"
@@ -29,10 +28,6 @@ jobs:
           git pull
           yarn install
           pm2 restart bragi
-
-        env:
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
           
         # uses: easingthemes/ssh-deploy@main
         # env:
