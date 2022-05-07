@@ -21,15 +21,20 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           ssh-keyscan -H ec2-177-71-145-235.sa-east-1.compute.amazonaws.com > ~/.ssh/known_hosts
         shell: bash
-      - name: Deploy
-        run: rsync -rav --delete build/ ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/
+      # - name: Deploy
+      #   run: |
+      #     ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}
+      #     cd ~/bragi-bot
+      #     git pull
+      #     yarn install
+      #     pm2 restart bragi
 
-      # - name: Deploy  
-      #   uses: easingthemes/ssh-deploy@main
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-      #     ARGS: "-rltgoDzvO --delete"
-      #     SOURCE: "src/"
-      #     REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-      #     REMOTE_USER: ${{ secrets.REMOTE_USER }}
-      #     TARGET: ${{ secrets.REMOTE_TARGET }}
+      - name: Deploy  
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "."
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
