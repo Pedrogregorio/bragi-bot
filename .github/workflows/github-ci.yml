@@ -22,12 +22,7 @@ jobs:
           ssh-keyscan -H ec2-177-71-145-235.sa-east-1.compute.amazonaws.com > ~/.ssh/known_hosts
         shell: bash
       - name: Deploy
-        run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}
-          cd ~/bragi-bot
-          git pull
-          yarn install
-          pm2 restart bragi
+        run: rsync -rav --delete build/ ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/
 
       # - name: Deploy  
       #   uses: easingthemes/ssh-deploy@main
