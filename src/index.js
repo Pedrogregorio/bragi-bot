@@ -105,7 +105,7 @@ client.on('message', async (message) => {
 
     // command to shuffle
     case '~shuffle':
-      shuffleSongs(message.channel);
+      shuffleSongs(message);
       break;
     
     default:
