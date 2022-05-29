@@ -1,4 +1,4 @@
-import playSongs from "../comands/play";
+import play from "../comands/play";
 import convertToYoutube from "./convertToYoutube"
 import MusicException from "../class/MusicException";
 import skip from "../comands/skip";
@@ -26,14 +26,14 @@ const nextMusic = async (message) => {
   } else {
     if (!server.songs[0]?.yut) {
       await convertToYoutube(message).then(() => {
-        playSongs(message, server.songs[0])
+        play(message, server.songs[0])
       }).catch((error) => {
         skip(message);
 
         throw new MusicException(error.message);
       })
     } else {
-      playSongs(message, server.songs[0])
+      play(message, server.songs[0])
     }
   }
 }

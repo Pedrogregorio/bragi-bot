@@ -56,7 +56,7 @@ async function fetchSong (infos) {
     headers: { 'Authorization': `Bearer ${infos.token}` }
   }).then((response) => {
     return response.data;
-  }).catch((e) => {
+  }).catch(() => {
     throw new MusicException(`desculpe mas ocorreu um erro com ${infos.type}`);
   });
 }

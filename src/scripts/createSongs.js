@@ -13,7 +13,6 @@ const createSongs = async (message) => {
   }
 
   const musicMessage = message.content.split(" ");
-  
 
   const plataform = musicMessage[1].split("/");
 
