@@ -19,8 +19,9 @@ client.once('ready', () => {
 
 client.on('message', async (message) => {
   if (message.author.bot) return;
-  if (!message.content.startsWith('~')) return;
+  if (!message.content.startsWith('~') && !message.content.startsWith('p!')) return;
   const content = message.content.split(" ")[0];
+  if (content === 'p!play' || content === 'p!join') return message.react('🥲');
   switch (content) {
     
     // commands for play
@@ -106,15 +107,6 @@ client.on('message', async (message) => {
     case '~shuffle':
       shuffleSongs(message.channel);
       break;
-
-    case 'p!play':
-      message.react('🥲');
-      break;
-
-    case 'p!join':
-      message.react('🥲');
-      break;
-
     
     default:
       message.channel.send("Desculpe, tente isso:");
