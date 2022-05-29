@@ -44,7 +44,7 @@ const playingMusic = async (message, title) => {
       case "⏭":
         server.playing = true;
         reaction.users.remove(user).catch(console.error);
-        if (!canModifyQueue(member)) return basicMessage('Você não tem permissão');
+        if (!canModifyQueue(member)) return basicMessage(message, 'Você não tem permissão');
         skip(message);
 
         collector.stop();
@@ -52,13 +52,13 @@ const playingMusic = async (message, title) => {
 
       case "⏯":
         reaction.users.remove(user).catch(console.error);
-        if (!canModifyQueue(member)) return basicMessage('Você não tem permissão');
+        if (!canModifyQueue(member)) return basicMessage(message, 'Você não tem permissão');
         pauseSong(message);
         break;
 
       case "🔇":
         reaction.users.remove(user).catch(console.error);
-        if (!canModifyQueue(member)) return basicMessage('Você não tem permissão');
+        if (!canModifyQueue(member)) return basicMessage(message, 'Você não tem permissão');
         server.muted = !server.muted;
         if (server.muted) {
           server.connection.dispatcher.setVolumeLogarithmic(0);
@@ -69,7 +69,7 @@ const playingMusic = async (message, title) => {
 
       case "⏹":
         reaction.users.remove(user).catch(console.error);
-        if (!canModifyQueue(member)) return basicMessage('Você não tem permissão');
+        if (!canModifyQueue(member)) return basicMessage(message, 'Você não tem permissão');
         stop(message);
         collector.stop();
         break;

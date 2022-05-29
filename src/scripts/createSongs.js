@@ -17,11 +17,26 @@ const createSongs = async (message) => {
   const plataform = musicMessage[1].split("/");
 
   if(validateWhichPlatform.isYoutube(plataform[2])) {
-    await youtube.getVideo(musicMessage[1]).then((music) => {
-      songs.push(mountSong(music));
-    }).catch(() => {
-      throw new MusicException("Não foi possível encontrar a música!");
-    });
+    const isPlaylist = plataform[3].split('?')[0] === 'playlist'
+
+    console.log(`isPlaylist: ${isPlaylist}`);
+
+    if (isPlaylist) {
+      const playlistId = plataform[3].split('=')[1];
+      await youtube.getPlaylist(playlistId).then((response) => {
+        console.log(response);
+      }).catch(() => {
+        throw new MusicException('Erro com a playlist do youtube');
+      });
+    } else {
+      await youtube.getVideo(musicMessage[1]).then((music) => {
+        console.log(music);
+        songs.push(mountSong(music));
+      }).catch(() => {
+        throw new MusicException("Não foi possível encontrar a música!");
+      });
+    }
+
   }
 
   else if(validateWhichPlatform.isSpotify(plataform[2])) {

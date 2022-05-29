@@ -3,9 +3,9 @@ import listMusics from "../responses/list";
 
 const queueMusic = (message) => {
   const serverQueue = message.client.queue.get(message.guild.id);
-  if (!message.member.voice.channel)
+  if (!message.member.voice.channel || !serverQueue)
     return basicMessage(
-      serverQueue,
+      message,
       "Você tem que pertencer ao canal para fazer essa ação!"
     );
   let msg = '';

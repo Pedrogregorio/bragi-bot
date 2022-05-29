@@ -1,10 +1,10 @@
 import { MessageEmbed } from 'discord.js';
 
-const basicMessage = async (server, title) => {
+const basicMessage = async (message, title) => {
   const playMusic = new MessageEmbed()
     .setColor('#62f8fb')
     .setDescription(`**${title}**`)
-  await server.textChannel.send({ embed: playMusic });
+  await message.channel.send({ embed: playMusic });
   return;
 }
 

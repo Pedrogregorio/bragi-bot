@@ -7,7 +7,7 @@ const shuffleSongs = (message) => {
 
   server.songs = server.songs.sort();
   server.songs.unshift(currentSong);
-  basicMessage(server, 'Lista embaralhada')
+  basicMessage(message, 'Lista embaralhada')
 }
 
 export default shuffleSongs;

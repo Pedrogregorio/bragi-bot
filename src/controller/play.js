@@ -40,11 +40,11 @@ const play = async (message) => {
         serverQueue.songs.push(...songs);
         serverQueue.songs.push(...playlist);
 
-        basicMessage(serverQueue, 'Músicas adicionadas à fila');
+        basicMessage(message, 'Músicas adicionadas à fila');
       } else {
         serverQueue.songs.push(...songs);
 
-        return basicMessage(serverQueue, 'Música adicionada à fila');
+        return basicMessage(message, 'Música adicionada à fila');
       }
     }
   } catch (error) {

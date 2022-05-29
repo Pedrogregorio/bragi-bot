@@ -5,7 +5,7 @@ const skip = (message) => {
   const serverQueue = message.client.queue.get(message.guild.id);
   if (!message.member.voice.channel)
     return basicMessage(
-      serverQueue,
+      message,
       "Você tem que pertencer ao canal para pular a música!"
     );
   if (!serverQueue) return;

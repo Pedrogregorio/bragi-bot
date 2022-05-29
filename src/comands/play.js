@@ -11,8 +11,8 @@ const playSongs = (message, song) => {
     skip(message);
   })
   .on("error", (error) => {
-    date = new Date();
-    console.log(`Error: ${error} - ${date.toLocaleString()}`);
+    console.log('-=-=-=-=-=-=-=--=-=-');
+    console.log(`Error: ${error}`);
     skip(message);
   });
   dispatcher.setVolumeLogarithmic(server.volume / 5);
