@@ -8,7 +8,7 @@ const createSongs = async (message) => {
   let songs = [];
 
   const validateWhichPlatform  = {
-    isYoutube: (plataform) =>  plataform === 'www.youtube.com',
+    isYoutube: (plataform) =>  plataform === 'www.youtube.com' || plataform === 'youtube.com',
     isSpotify: (plataform) =>  plataform === 'open.spotify.com',
   }
 
@@ -19,12 +19,12 @@ const createSongs = async (message) => {
   if(validateWhichPlatform.isYoutube(plataform[2])) {
     const isPlaylist = plataform[3].split('?')[0] === 'playlist'
 
-    console.log(`isPlaylist: ${isPlaylist}`);
-
     if (isPlaylist) {
       const playlistId = plataform[3].split('=')[1];
       await youtube.getPlaylist(playlistId).then((response) => {
-        console.log(response);
+        response.videos.forEach((video) => {
+          songs.push(mountSong(video));
+        });
       }).catch(() => {
         throw new MusicException('Erro com a playlist do youtube');
       });
