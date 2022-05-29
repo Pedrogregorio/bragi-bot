@@ -19,13 +19,13 @@
     "miniget": "^4.2.2",
     "node-opus": "^0.3.3",
     "spdl-core": "^2.0.2",
-    "spotify-url-info": "^2.2.0",
-    "sucrase": "^3.20.1",
-    "youtube-sr": "^4.1.13",
-    "ytdl-core": "^4.10.1"
+    "spotify-url-info": "^2.2.9",
+    "sucrase": "^3.21.0",
+    "youtube-sr": "^4.1.17",
+    "ytdl-core": "^4.11.0"
   },
   "devDependencies": {
-    "@sucrase/jest-plugin": "^2.2.0",
+    "@sucrase/jest-plugin": "^2.2.1",
     "jest": "^27.5.1",
     "jest-discordjs-mocks": "^1.0.2"
   }
