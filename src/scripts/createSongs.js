@@ -30,7 +30,6 @@ const createSongs = async (message) => {
       });
     } else {
       await youtube.getVideo(musicMessage[1]).then((music) => {
-        console.log(music);
         songs.push(mountSong(music));
       }).catch(() => {
         throw new MusicException("Não foi possível encontrar a música!");
