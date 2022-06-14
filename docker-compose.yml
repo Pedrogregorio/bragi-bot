@@ -4,4 +4,9 @@ services:
     build: .
     ports:
       - "3000:3000"
-    command: ["npm", "start"]
+    command: npm start
+    environment:
+      - TOKEN_BOT=token_bot
+      - URL_API_SPOTIFY=https://api.spotify.com/v1
+      - CODE_AUTORIZATON_SPOTIFY=token_spotify
+      - GET_TOKEN_SPOTIFY=https://accounts.spotify.com/api/token
