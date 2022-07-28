@@ -9,20 +9,32 @@ import clean from './comands/clean';
 import pauseSong from './comands/pause';
 import shuffleSongs from './comands/shuffle';
 import loop from './comands/loop';
+import basicMessage from './responses/basicMessage';
 
 const client = new Discord.Client();
 client.queue = new Map();
 
 client.once('ready', () => {
-  console.log('Bot Online!');
+  console.log('======> Bot Online! <=======');
 })
 
 client.on('message', async (message) => {
   if (message.author.bot) return;
+
   if (!message.content.startsWith('~')) return;
+
   const content = message.content.split(" ")[0];
+
+  if (!content) return
+
+  if (!message.member.voice.channel)
+    return basicMessage(
+      message,
+      "Você tem que pertencer ao canal para realizar uma ação!"
+    );
+
   switch (content) {
-    
+
     // commands for play
 
     case '~play':
@@ -40,24 +52,24 @@ client.on('message', async (message) => {
       skip(message);
       break;
 
-      
+
     // commmands for list
-    
+
     case '~list':
       queueMusic(message);
       break;
-      
+
     case '~queue':
       queueMusic(message);
       break;
-          
-          
+
+
     // commands for stop and leave
-          
+
     case '~stop':
       stop(message);
       break;
-            
+
     case '~quit':
       stop(message);
       break;
@@ -106,7 +118,7 @@ client.on('message', async (message) => {
     case '~shuffle':
       shuffleSongs(message);
       break;
-    
+
     default:
       message.channel.send("Desculpe, tente isso:");
       helpCommands(message.channel);

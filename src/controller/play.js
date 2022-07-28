@@ -13,7 +13,7 @@ const play = async (message) => {
 
     const { songs, playlist } = data;
 
-    if (!songs || !playlist) return data; 
+    if (!songs || !playlist) return data;
     const server = {
       textChannel: message.channel,
       voiceChannel: message.member.voice.channel,
@@ -49,6 +49,8 @@ const play = async (message) => {
     }
   } catch (error) {
     messageEmbed(message, error.message);
+
+    console.table({ Erro: error.message });
 
     return (error.message);
   }

@@ -8,7 +8,7 @@ const playingMusic = async (message, title) => {
     }
   });
   const playMusic = new MessageEmbed()
-    .setColor('#62f8fb')
+    .setColor('#59636b')
     .setTitle('Tocando a musica:')
     .addFields(
       { name: 'Duração', value: server.songs[0].durationFormatted },

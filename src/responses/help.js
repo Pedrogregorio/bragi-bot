@@ -12,7 +12,7 @@ const helpCommands = async (server) => {
       "**`~loop`** - Definir musica como loop(Desenvolvimento)"
     ];
   const playMusic = new MessageEmbed()
-    .setColor('#62f8fb')
+    .setColor('#59636b')
     .setTitle('Lista de comandos')
     .setDescription(commands.join('\n'));
   await server.send({ embed: playMusic });
