@@ -7,11 +7,17 @@ const playSongs = async (message, song) => {
   const server = await serverController(message);
 
   const dispatcher = server.connection
-    .play(ytdl(song.url, { filter: "audioonly", quality: 'highestaudio', highWaterMark: 1 << 25, maxRetries: 10, maxReconnects: 10 }))
-    .on("finish", () => {
+    .play(ytdl(song.url,
+      {
+        filter: "audioonly",
+        quality: 'highestaudio',
+        highWaterMark: 1 << 25,
+        maxRetries: 10,
+        maxReconnects: 10
+      }
+    )).on("finish", () => {
       skip(message);
-    })
-    .on("error", (error) => {
+    }).on("error", (error) => {
       console.table({ Erro: error.message });
       skip(message);
     });
