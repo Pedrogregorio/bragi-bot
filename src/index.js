@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import Discord from 'discord.js';
 import helpCommands from './responses/help';
-import play from './controller/play';
+import playController from './controller/playController';
 import skip from './comands/skip';
 import queueMusic from './comands/queue';
 import stop from './comands/stop';
@@ -10,6 +10,7 @@ import pauseSong from './comands/pause';
 import shuffleSongs from './comands/shuffle';
 import loop from './comands/loop';
 import basicMessage from './responses/basicMessage';
+import randomSongs from './comands/random';
 
 const client = new Discord.Client();
 client.queue = new Map();
@@ -25,8 +26,6 @@ client.on('message', async (message) => {
 
   const content = message.content.split(" ")[0];
 
-  if (!content) return
-
   if (!message.member.voice.channel)
     return basicMessage(
       message,
@@ -38,11 +37,11 @@ client.on('message', async (message) => {
     // commands for play
 
     case '~play':
-      play(message);
+      playController(message);
       break;
 
     case '~p':
-      play(message);
+      playController(message);
       break;
 
 
@@ -117,6 +116,15 @@ client.on('message', async (message) => {
     // command to shuffle
     case '~shuffle':
       shuffleSongs(message);
+      break;
+
+    case '~random':
+      randomSongs(message);
+      break;
+
+
+    case '~r':
+      randomSongs(message);
       break;
 
     default:

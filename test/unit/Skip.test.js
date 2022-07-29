@@ -1,6 +1,7 @@
 import "dotenv/config";
 import skip from "../../src/comands/skip";
 import play from "../../src/controller/play";
+import serverController from "../../src/controller/serverController";
 import mockMessage from "../mock/mockMessage";
 
 describe("play music", () => {
@@ -36,7 +37,7 @@ describe("play music", () => {
     });
 
     await skip(message);
-    const { songs } = message.client.queue.get(message.guild.id);
+    const { songs } = await serverController(message);
     expect(songs.length).toBe(1);
   });
 });

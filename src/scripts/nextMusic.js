@@ -2,9 +2,10 @@ import play from "../comands/play";
 import convertToYoutube from "./convertToYoutube"
 import MusicException from "../class/MusicException";
 import skip from "../comands/skip";
+import serverController from "../controller/serverController";
 
 const nextMusic = async (message) => {
-  const server = message.client.queue.get(message.guild.id)
+  const server = await serverController(message);
 
   if (!server.songs.length > 0) {
     if (!server) return

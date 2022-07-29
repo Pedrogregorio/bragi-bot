@@ -1,7 +1,8 @@
 import { MessageEmbed } from 'discord.js';
+import serverController from '../controller/serverController';
 
 const playingMusic = async (message, title) => {
-  const server = message.client.queue.get(message.guild.id);
+  const server = await serverController(message);
   server.textChannel.messages.cache.forEach(msg => {
     if (msg.author.username === 'bragi' && msg.embeds.length > 0) {
       if (msg.embeds[0].title === 'Tocando a musica:') return msg.delete();

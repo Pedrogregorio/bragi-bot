@@ -1,7 +1,8 @@
+import serverController from "../controller/serverController";
 import listMusics from "../responses/list";
 
-const queueMusic = (message) => {
-  const serverQueue = message.client.queue.get(message.guild.id);
+const queueMusic = async (message) => {
+  const serverQueue = await serverController(message);
 
   let msg = '';
 

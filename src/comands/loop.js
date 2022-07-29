@@ -1,7 +1,8 @@
+import serverController from "../controller/serverController";
 import messageEmbed from "../responses/messageEmbed";
 
-const loop = (message) => {
-  const server = message.client.queue.get(message.guild.id);
+const loop = async (message) => {
+  const server = await serverController(message);
   if(!server) return messageEmbed(message, 'Não há nenhuma música tocando');
   if(!server.songs[0]) return messageEmbed(message, 'Não há nenhuma música tocando');
   if(!server.songs[0].loop) {

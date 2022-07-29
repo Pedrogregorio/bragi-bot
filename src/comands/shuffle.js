@@ -1,7 +1,8 @@
+import serverController from "../controller/serverController";
 import basicMessage from "../responses/basicMessage";
 
-const shuffleSongs = (message) => {
-  const server = message.client.queue.get(message.guild.id)
+const shuffleSongs = async (message) => {
+  const server = await serverController(message);
   if (server.songs.length <= 0) return basicMessage(server, 'Lista vazia')
   const currentSong = server.songs.shift();
 

@@ -1,5 +1,7 @@
-const stop = (message) => {
-  const serverQueue = message.client.queue.get(message.guild.id);
+import serverController from "../controller/serverController";
+
+const stop = async (message) => {
+  const serverQueue = await serverController(message);
 
   message.react('👋')
   serverQueue.songs = [];

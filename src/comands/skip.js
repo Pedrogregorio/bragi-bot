@@ -1,7 +1,8 @@
+import serverController from "../controller/serverController";
 import nextMusic from "../scripts/nextMusic";
 
-const skip = (message) => {
-  const serverQueue = message.client.queue.get(message.guild.id);
+const skip = async (message) => {
+  const serverQueue = await serverController(message);
 
   if (!serverQueue) return;
   message.react('👌');

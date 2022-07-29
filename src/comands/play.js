@@ -1,9 +1,10 @@
 import ytdl from "ytdl-core";
+import serverController from "../controller/serverController";
 import playingMusic from "../responses/play";
 import skip from "./skip";
 
-const playSongs = (message, song) => {
-  const server = message.client.queue.get(message.guild.id)
+const playSongs = async (message, song) => {
+  const server = await serverController(message);
 
   const dispatcher = server.connection
     .play(ytdl(song.url, { filter: "audioonly", quality: 'highestaudio', highWaterMark: 1 << 25, maxRetries: 10, maxReconnects: 10 }))

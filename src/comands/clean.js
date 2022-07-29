@@ -1,7 +1,8 @@
+import serverController from "../controller/serverController";
 import basicMessage from "../responses/basicMessage";
 
-const clean = (message) => {
-  const serverQueue = message.client.queue.get(message.guild.id);
+const clean = async (message) => {
+  const serverQueue = await serverController(message);
 
   if (serverQueue?.songs.length > 1) {
     serverQueue.songs.forEach((_, index) => {
