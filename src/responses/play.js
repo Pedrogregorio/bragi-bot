@@ -4,7 +4,7 @@ import serverController from '../controller/serverController';
 const playingMusic = async (message, title) => {
   const server = await serverController(message);
   server.textChannel.messages.cache.forEach(msg => {
-    if (msg.author.username === 'bragi' && msg.embeds.length > 0) {
+    if (msg.author.username === 'bragi ♬' && msg.embeds.length > 0) {
       if (msg.embeds[0].title === 'Tocando a musica:') return msg.delete();
     }
   });

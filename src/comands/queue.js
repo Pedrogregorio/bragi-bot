@@ -9,7 +9,7 @@ const queueMusic = async (message) => {
   serverQueue.songs.forEach((song, index) => {
     if (index === 10) return msg = msg + `More...\n`
     if (index > 10) return msg;
-    if (!song?.yut) {
+    if (!song?.isYoutube) {
       msg = msg + `${index + 1} - ${song.name} ${ index === 0? ':play_pause:' : ':musical_note:' }\n`
     } else {
       msg = msg + `${index + 1} - ${song.title} ${ index === 0? ':play_pause:' : ':musical_note:' }\n`

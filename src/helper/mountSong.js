@@ -8,7 +8,7 @@ const mountSong = (music) => {
     duration: music?.duration,
     loop: false,
     durationFormatted: music?.durationFormatted,
-    yut: true
+    isYoutube: true
   };
 }
 export default mountSong;
