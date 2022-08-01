@@ -23,7 +23,7 @@ const serverController = async (message, random = false) => {
     random,
   })
 
-  basicMessage(message, 'Modo aleatório ativado');
+  if (random) basicMessage(message, 'Modo aleatório ativado');
 
   return message.client.queue.get(message.guild.id);
 }
