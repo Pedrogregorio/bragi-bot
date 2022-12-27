@@ -1,3 +1,5 @@
 build:
   docker:
     web: Dockerfile
+run:
+  web: pm2-runtime pps.json
